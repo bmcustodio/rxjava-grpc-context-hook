@@ -1,0 +1,70 @@
+apply plugin: 'maven-publish'
+
+bintray {
+    key = System.getenv('BINTRAY_APIKEY')
+    pkg {
+        desc = 'An RxJava hook which enables gRPC Context propagation.'
+        githubReleaseNotesFile = 'README.md'
+        githubRepo = 'brunomcustodio/rxjava-grpc-context-hook'
+        issueTrackerUrl = 'https://github.com/brunomcustodio/rxjava-grpc-context-hook/issues'
+        licenses = ['Apache-2.0']
+        name = 'rxjava-grpc-context-hook'
+        repo = 'maven'
+        vcsUrl = 'https://github.com/brunomcustodio/rxjava-grpc-context-hook.git'
+        version {
+            desc = project.version
+            gpg {
+                sign = true
+            }
+            name = project.version
+            released = new Date()
+        }
+        websiteUrl = 'https://github.com/brunomcustodio/rxjava-grpc-context-hook'
+    }
+    publications = ['DefaultMavenPublication']
+    user = System.getenv('BINTRAY_USER')
+}
+
+publishing {
+    publications {
+        DefaultMavenPublication(MavenPublication) {
+            from components.java
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'rxjava-grpc-context-hook'
+                    description 'An RxJava hook which enables gRPC Context propagation.'
+                    url 'https://github.com/brunomcustodio/rxjava-grpc-context-hook'
+                    scm {
+                        url 'https://github.com/brunomcustodio/rxjava-grpc-context-hook.git'
+                        connection 'https://github.com/brunomcustodio/rxjava-grpc-context-hook.git'
+                        developerConnection 'https://github.com/brunomcustodio/rxjava-grpc-context-hook.git'
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'brunomcustodio'
+                            name 'brunomcustodio'
+                            email 'brunomcustodio@gmail.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
