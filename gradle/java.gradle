@@ -3,11 +3,12 @@ apply plugin: 'java'
 dependencies {
     compile 'io.grpc:grpc-core:0.15.0'
     compile 'io.reactivex:rxjava:1.1.9'
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
     testCompile 'junit:junit:4.12'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_6
-targetCompatibility = JavaVersion.VERSION_1_6
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'

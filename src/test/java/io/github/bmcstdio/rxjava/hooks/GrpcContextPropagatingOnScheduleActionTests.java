@@ -23,8 +23,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import rx.Observable;
-import rx.Observable.OnSubscribe;
-import rx.Subscriber;
 import rx.observers.TestSubscriber;
 import rx.plugins.RxJavaHooks;
 import rx.schedulers.Schedulers;
@@ -54,13 +52,10 @@ public final class GrpcContextPropagatingOnScheduleActionTests {
     newContext.attach();
 
     final TestSubscriber<Object> subscriber = new TestSubscriber<Object>();
-    Observable.create(new OnSubscribe<Object>() {
-      @Override
-      public void call(final Subscriber<? super Object> subscriber) {
-        subscriber.onNext(KEY_1.get());
-        subscriber.onNext(KEY_2.get());
-        subscriber.onCompleted();
-      }
+    Observable.create(subscriber1 -> {
+      subscriber1.onNext(KEY_1.get());
+      subscriber1.onNext(KEY_2.get());
+      subscriber1.onCompleted();
     }).subscribeOn(Schedulers.computation()).subscribe(subscriber);
 
     newContext.detach(oldContext);

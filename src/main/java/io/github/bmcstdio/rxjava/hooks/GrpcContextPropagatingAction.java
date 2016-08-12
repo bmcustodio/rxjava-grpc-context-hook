@@ -30,12 +30,7 @@ public final class GrpcContextPropagatingAction implements Action0 {
    * @param action0 the {@link Action0} to decorate.
    */
   public GrpcContextPropagatingAction(final Action0 action0) {
-    this.runnable = Context.current().wrap(new Runnable() {
-      @Override
-      public void run() {
-        action0.call();
-      }
-    });
+    this.runnable = Context.current().wrap(action0::call);
   }
 
   @Override
