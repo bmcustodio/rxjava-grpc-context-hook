@@ -1,8 +1,8 @@
 apply plugin: 'java'
 
 dependencies {
-    compile 'io.grpc:grpc-core:0.15.0'
-    compile 'io.reactivex:rxjava:1.1.9'
+    compile 'io.grpc:grpc-context:1.0.1'
+    compile 'io.reactivex:rxjava:1.2.1'
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
     testCompile 'junit:junit:4.12'
 }
